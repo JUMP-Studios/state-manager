@@ -4,7 +4,7 @@
 
 # @jumpstudios/state-manager
 
-An *Open-Source* state-manager library for *Roblox*.
+An *Open-Source* state library for *Roblox*.
 
 ## 🛠️ Installation
 

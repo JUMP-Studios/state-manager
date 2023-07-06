@@ -1,5 +1,9 @@
+type DeepPartial<T> = {
+	[K in keyof T]?: DeepPartial<T[K]>;
+};
+
 export type InferNone<T> = T extends undefined ? symbol : never;
-export type MapToNone<T> = Partial<{ [K in keyof T]-?: NonNullable<T[K]> | InferNone<T[K]> }>;
+export type MapToNone<T> = DeepPartial<{ [K in keyof T]-?: NonNullable<T[K]> | InferNone<T[K]> }>;
 export type Creatable = keyof Pick<
 	CreatableInstances,
 	"StringValue" | "NumberValue" | "Vector3Value" | "BoolValue" | "ObjectValue"

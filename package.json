@@ -1,16 +1,16 @@
 {
   "name": "@jumpstudios/state-manager",
-	"version": "1.2.4",
-	"description": "Manages states and properties, similarly to Roact",
-	"main": "./out/init.lua",
-	"keywords": [
-		"state",
-		"roblox",
-		"typescript",
-		"ts",
-		"roblox-ts",
-		"ts"
-	],
+  "version": "1.2.5",
+  "description": "Manages states and properties, similarly to Roact",
+  "main": "./out/init.lua",
+  "keywords": [
+    "state",
+    "roblox",
+    "typescript",
+    "ts",
+    "roblox-ts",
+    "ts"
+  ],
   "author": "Icejiynn",
   "license": "MIT",
   "scripts": {

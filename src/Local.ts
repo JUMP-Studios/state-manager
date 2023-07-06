@@ -19,8 +19,8 @@ function filterNone<T extends Record<string, unknown> = {}>(given: T) {
 }
 
 export default abstract class State<S = {}, P = {}> {
-	state = {} as Partial<S>;
-	props = {} as Partial<P>;
+	state = {} as S;
+	props = {} as P;
 
 	protected update(newState: MapToNone<S> | Partial<S>) {
 		let shouldUpdate = true;

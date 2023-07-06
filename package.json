@@ -1,6 +1,6 @@
 {
   "name": "@jumpstudios/state-manager",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Manages states and properties, similarly to Roact",
   "main": "./out/init.lua",
   "keywords": [

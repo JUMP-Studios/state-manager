@@ -1,35 +1,36 @@
 /* eslint-disable roblox-ts/no-private-identifier */
-import { Players } from "@rbxts/services";
+import { Players, RunService } from "@rbxts/services";
 import State from "./Local";
 import { Creatable, MapToNone } from "./util";
 import Objects from "./Objects";
 
 type ValueInstance = CreatableInstances[Creatable];
+type ListenerProps = { name: string; isPersonalized: boolean }
 
-export default class StateListener<S = {}, P = {}> extends State<S, P> {
-	private replicator: Folder;
-	private events: RBXScriptConnection[];
+export default class StateListener<S = {}, P = {}> extends State<S, P & ListenerProps> {
+	private replicator!: Folder;
+	private events = [] as RBXScriptConnection[];
 
-	constructor(name: string, isPersonalized?: boolean) {
-		super();
+	constructor(props: P & ListenerProps) {
+		super(props)
 
 		const addState = (child: ValueInstance) => {
 			const name = child.Name;
 
 			this.setState({
-				[name]: child.Value as S[keyof S],
+				[name]: child.Value,
 			} as MapToNone<S>);
 
 			child.GetPropertyChangedSignal("Value").Connect(() => {
 				this.setState({
-					[name]: child.Value as unknown,
+					[name]: child.Value,
 				} as MapToNone<S>);
 			});
 		};
 
 		this.replicator = (
-			isPersonalized ? Players.LocalPlayer.WaitForChild("PlayerGui") : Objects.Folder
-		).WaitForChild(name) as Folder;
+			this.props.isPersonalized ? Players.LocalPlayer.WaitForChild("PlayerGui") : Objects.Folder
+		).WaitForChild(this.props.name) as Folder;
 		this.events = [
 			this.replicator.ChildAdded.Connect((child) => addState(child as ValueInstance)),
 			this.replicator.ChildRemoved.Connect((child) => addState(child as ValueInstance)),

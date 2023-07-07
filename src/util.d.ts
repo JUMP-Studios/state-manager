@@ -1,3 +1,7 @@
+import StateListener from "./Listener";
+import State from "./Local";
+import StateReplicator from "./Replicator";
+
 type DeepPartial<T> = {
 	[K in keyof T]?: DeepPartial<T[K]>;
 };
@@ -23,3 +27,7 @@ export type StateInstances<T> = {
 		: never;
 };
 export type ValueContainer = Record<string, unknown>;
+export interface StateConstructor<S = {}, P = {}> {
+	new (props: P): StateComponent<S, P>;
+}
+export type StateComponent<S = {}, P = {}> = StateListener<S, P> | State<S, P> | StateReplicator<S, P>

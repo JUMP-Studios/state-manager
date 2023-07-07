@@ -1,8 +1,6 @@
-import StateListener from "./Listener";
-import State from "./Local";
-import StateReplicator from "./Replicator";
+import { StateComponent } from "./util";
 
-function unmount(manager: StateListener | State | StateReplicator) {
+function unmount(manager: StateComponent) {
 	if (manager["willBeDestroyed"] !== undefined) {
 		manager.willBeDestroyed();
 	}

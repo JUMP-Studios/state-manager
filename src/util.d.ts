@@ -3,7 +3,7 @@ import State from "./Local";
 import StateReplicator from "./Replicator";
 
 type DeepPartial<T> = {
-	[K in keyof T]?: DeepPartial<T[K]>;
+	[K in keyof T]?: T[K] extends object ? DeepPartial<MapToNone<T[K]>> : T[K];
 };
 
 export type InferNone<T> = T extends undefined ? symbol : never;

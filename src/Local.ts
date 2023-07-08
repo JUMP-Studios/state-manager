@@ -5,8 +5,8 @@ import { MapToNone } from "./util";
 import Table from "@jumpstudios/table-util";
 
 export default interface State<S = {}, P = {}> {
-	shouldUpdate(newState: Partial<S>): boolean;
-	willUpdate(newState: Partial<S>): void;
+	shouldUpdate(newState: S): boolean;
+	willUpdate(newState: S): void;
 	willBeDestroyed(): void;
 }
 
@@ -31,17 +31,16 @@ export default abstract class State<S = {}, P = {}> {
 	}
 	protected update(newState: MapToNone<S> | Partial<S>) {
 		let shouldUpdate = true;
+		newState = filterNone(Table.reconcile(Object.copy(this.state as {}), newState as Partial<S>, true));
 
 		if (this["shouldUpdate"] !== undefined) {
-			if (!this.shouldUpdate(newState as Partial<S>)) {
+			if (!this.shouldUpdate(newState as S)) {
 				shouldUpdate = false;
 			}
 		}
 
-		newState = filterNone(Table.reconcile(Object.copy(this.state as {}), newState as Partial<S>, true));
-
 		if (this["willUpdate"] !== undefined && shouldUpdate) {
-			this.willUpdate(newState as Partial<S>);
+			this.willUpdate(newState as S);
 		}
 
 		this.state = newState as S

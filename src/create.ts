@@ -1,5 +1,5 @@
 import { StateComponent, StateConstructor } from "./util";
 
-export default function createState<P>(component: StateConstructor<{}, P>, props: StateComponent<{}, P>["props"]) {
-	new component(props)
+export default function createState<S, P>(component: StateConstructor<S, P>, props: StateComponent<S, P>["props"]) {
+	return new component(props)
 }

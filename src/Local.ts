@@ -13,9 +13,13 @@ export default interface State<S = {}, P = {}> {
 function filterNone<T extends Record<string, unknown> = {}>(given: T) {
 	for (const [key, value] of Object.entries(given)) {
 		if (value === None) {
-			(given as Partial<Record<string, undefined>>)[key as string] = undefined;
+			(given as Partial<Record<string, unknown>>)[key as string] = undefined;
+		} else if (type(value) === "table") {
+			filterNone(value as Record<string, unknown>)
 		}
 	}
+
+	return given
 }
 
 export default abstract class State<S = {}, P = {}> {
@@ -34,11 +38,13 @@ export default abstract class State<S = {}, P = {}> {
 			}
 		}
 
+		newState = filterNone(Table.reconcile(Object.copy(this.state as {}), newState as Partial<S>, true));
+
 		if (this["willUpdate"] !== undefined && shouldUpdate) {
 			this.willUpdate(newState as Partial<S>);
 		}
 
-		filterNone(Table.reconcile(this.state as {}, newState as Partial<S>, true));
+		this.state = newState as S
 	}
 	protected setState(updateState: MapToNone<S>) {
 		this.update(updateState);

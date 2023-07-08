@@ -1,12 +1,19 @@
-const StateManager = {
-	Listener: import("./Listener").expect().default,
-	Replicator: import("./Replicator").expect().default,
-	State: import("./Local").expect().default,
+import StateListener from "./Listener";
+import State from "./Local";
+import None from "./None";
+import StateReplicator from "./Replicator";
+import createState from "./create";
+import unmount from "./unmount";
 
-	None: import("./None").expect().default,
+const StateManager = {
+	Listener: StateListener,
+	Replicator: StateReplicator,
+	State: State,
+
+	None: None,
 	
-	createState: import("./create").expect().default,
-	unmount: import("./unmount").expect().default
+	createState: createState,
+	unmount: unmount
 };
 
 export = StateManager;

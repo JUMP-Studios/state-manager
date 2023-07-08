@@ -12,8 +12,8 @@ type ReplicatorProps<S> = {
 export default class StateReplicator<S = {}, P = {}> extends State<S, P & ReplicatorProps<S>> {
 	private instances = {} as StateInstances<S> & Record<string, Instance>
 
-	constructor(props: P & ReplicatorProps<S>) {
-		super(props)
+	constructor(props: P) {
+		super(props as P & ReplicatorProps<S>)
 
 		const { personalized } = this.props
 		const mainInstance = new Instance("Folder");

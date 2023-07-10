@@ -2,6 +2,7 @@ import Object from "@rbxts/object-utils";
 import State from "./Local";
 import { Creatable, AllowedValues, StateInstances, MapToNone } from "./util";
 import Objects from "./Objects";
+import { None } from ".";
 
 type ReplicatorProps<S> = {
 	name: string, 
@@ -19,7 +20,7 @@ const instanceTypes = {
 } as Record<ReturnType<typeof type>, Creatable>;
 
 export default class StateReplicator<S = {}, P = {}> extends State<S, P & ReplicatorProps<S>> {
-	private instances = {} as StateInstances<S> & Record<string, Instance>
+	private instances = {} as Partial<StateInstances<S> & Record<string, Instance>>
 
 	constructor(props: P) {
 		super(props as P & ReplicatorProps<S>)
@@ -53,7 +54,11 @@ export default class StateReplicator<S = {}, P = {}> extends State<S, P & Replic
 					(this.instances[state as string] as StringValue) = stateInstance as StringValue;
 				}
 
-				(this.instances[state as string] as StringValue).Value = value as string;
+				if (value === None) {
+					this.instances[state as keyof S] = undefined
+				} else {
+					(this.instances[state as string] as StringValue).Value = value as string;
+				}
 			}
 		}
 

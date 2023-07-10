@@ -1,8 +1,9 @@
 /* eslint-disable roblox-ts/no-private-identifier */
-import { Players, RunService } from "@rbxts/services";
+import { Players } from "@rbxts/services";
 import State from "./Local";
 import { Creatable, MapToNone } from "./util";
 import Objects from "./Objects";
+import { None } from ".";
 
 type ValueInstance = CreatableInstances[Creatable];
 type ListenerProps = { name: string; isPersonalized: boolean }
@@ -33,7 +34,11 @@ export default class StateListener<S = {}, P = {}> extends State<S, P & Listener
 		).WaitForChild(this.props.name) as Folder;
 		this.events = [
 			this.replicator.ChildAdded.Connect((child) => addState(child as ValueInstance)),
-			this.replicator.ChildRemoved.Connect((child) => addState(child as ValueInstance)),
+			this.replicator.ChildRemoved.Connect((child) => {
+				this.setState({
+					[child.Name]: None,
+				} as MapToNone<S>);
+			}),
 			this.replicator.Destroying.Connect(() => {
 				this.events.forEach((connection) => connection.Disconnect());
 				this.events.clear();

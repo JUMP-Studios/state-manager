@@ -11,8 +11,8 @@ export default class StateListener<S = {}, P = {}> extends State<S, P & Listener
 	private replicator!: Folder;
 	private events = [] as RBXScriptConnection[];
 
-	constructor(props: P & ListenerProps) {
-		super(props)
+	constructor(props: P) {
+		super(props as P & ListenerProps)
 
 		const addState = (child: ValueInstance) => {
 			const name = child.Name;

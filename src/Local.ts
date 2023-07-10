@@ -4,7 +4,7 @@ import None from "./None";
 import { MapToNone } from "./util";
 import Table from "@jumpstudios/table-util";
 
-export default interface State<S = {}, P = {}> {
+interface State<S = {}, P = {}> {
 	shouldUpdate(newState: S): boolean;
 	willUpdate(newState: S): void;
 	willBeDestroyed(): void;
@@ -22,7 +22,7 @@ function filterNone<T extends Record<string, unknown> = {}>(given: T) {
 	return given
 }
 
-export default abstract class State<S = {}, P = {}> {
+abstract class State<S = {}, P = {}> {
 	state = {} as S;
 	props: P;
 
@@ -49,3 +49,5 @@ export default abstract class State<S = {}, P = {}> {
 		this.update(updateState);
 	}
 }
+
+export = State

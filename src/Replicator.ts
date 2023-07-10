@@ -9,6 +9,15 @@ type ReplicatorProps<S> = {
 	personalized?: Player
 }
 
+const instanceTypes = {
+	string: "StringValue",
+	number: "NumberValue",
+	boolean: "BoolValue",
+	vector: "Vector3Value",
+	table: "StringValue",
+	userdata: "ObjectValue",
+} as Record<ReturnType<typeof type>, Creatable>;
+
 export default class StateReplicator<S = {}, P = {}> extends State<S, P & ReplicatorProps<S>> {
 	private instances = {} as StateInstances<S> & Record<string, Instance>
 
@@ -55,12 +64,3 @@ export default class StateReplicator<S = {}, P = {}> extends State<S, P & Replic
 function determineValueType(value: AllowedValues): Creatable {
 	return instanceTypes[type(value)];
 }
-
-const instanceTypes = {
-	string: "StringValue",
-	number: "NumberValue",
-	boolean: "BoolValue",
-	vector: "Vector3Value",
-	table: "StringValue",
-	userdata: "ObjectValue",
-} as Record<ReturnType<typeof type>, Creatable>;

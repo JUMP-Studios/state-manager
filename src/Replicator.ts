@@ -2,7 +2,7 @@ import Object from "@rbxts/object-utils";
 import State from "./Local";
 import { Creatable, AllowedValues, StateInstances, MapToNone } from "./util";
 import Objects from "./Objects";
-import { None } from ".";
+import None from "./None";
 
 type ReplicatorProps<S> = {
 	name: string, 
@@ -55,6 +55,7 @@ export default class StateReplicator<S = {}, P = {}> extends State<S, P & Replic
 				}
 
 				if (value === None) {
+					this.instances[state as keyof S]!.Destroy()
 					this.instances[state as keyof S] = undefined
 				} else {
 					(this.instances[state as string] as StringValue).Value = value as string;

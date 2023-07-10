@@ -3,7 +3,7 @@ import { Players } from "@rbxts/services";
 import State from "./Local";
 import { Creatable, MapToNone } from "./util";
 import Objects from "./Objects";
-import { None } from ".";
+import None from "./None";
 
 type ValueInstance = CreatableInstances[Creatable];
 type ListenerProps = { name: string; isPersonalized: boolean }

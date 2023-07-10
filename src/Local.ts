@@ -39,7 +39,7 @@ export default abstract class State<S = {}, P = {}> {
 			}
 		}
 
-		if (this["willUpdate"] !== undefined && shouldUpdate) {
+		if (this["willUpdate"] !== undefined && !Object.isEmpty(this.state as {}) && shouldUpdate) {
 			this.willUpdate(newState as S);
 		}
 

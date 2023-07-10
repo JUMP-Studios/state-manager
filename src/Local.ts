@@ -1,8 +1,8 @@
 /* eslint-disable roblox-ts/no-private-identifier */
 import Object from "@rbxts/object-utils";
-import None from "./None";
 import { MapToNone } from "./util";
 import Table from "@jumpstudios/table-util";
+import None from "./None";
 
 interface State<S = {}, P = {}> {
 	shouldUpdate(newState: S): boolean;
